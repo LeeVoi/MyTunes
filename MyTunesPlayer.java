@@ -36,9 +36,9 @@ import javafx.stage.Stage;
 class MyTunesController implements Initializable {
 
     @FXML
-    private TableView<Playlist> tablePlaylists;
+    private TableView < Playlist > tablePlaylists;
     @FXML
-    private TableView<Song> tableSongs;
+    private TableView < Song > tableSongs;
     @FXML
     private Label lblIsPlaying;
     @FXML
@@ -46,25 +46,25 @@ class MyTunesController implements Initializable {
     @FXML
     private Slider sliderVolume;
     @FXML
-    private TableColumn<Playlist, String> clmPlaylistName;
+    private TableColumn < Playlist, String > clmPlaylistName;
     @FXML
-    private TableColumn<Playlist, String> clmPlaylistSongsAmount;
+    private TableColumn < Playlist, String > clmPlaylistSongsAmount;
     @FXML
-    private TableColumn<Playlist, String> clmPlaylistTotalDuration;
+    private TableColumn < Playlist, String > clmPlaylistTotalDuration;
     @FXML
-    private TableColumn<Song, String> clmSongTitle;
+    private TableColumn < Song, String > clmSongTitle;
     @FXML
-    private TableColumn<Song, String> clmSongArtist;
+    private TableColumn < Song, String > clmSongArtist;
     @FXML
-    private TableColumn<Song, String> clmSongDuration;
+    private TableColumn < Song, String > clmSongDuration;
     @FXML
-    private TableView<Song> tableCurrentPlaylist;
+    private TableView < Song > tableCurrentPlaylist;
     @FXML
-    private TableColumn<Song, String> clmCurrentPlaylistTrack;
+    private TableColumn < Song, String > clmCurrentPlaylistTrack;
     @FXML
-    private TableColumn<Song, String> clmCurrentPlaylistTitle;
+    private TableColumn < Song, String > clmCurrentPlaylistTitle;
     @FXML
-    private TableColumn<Song, String> clmSongGenre;
+    private TableColumn < Song, String > clmSongGenre;
     @FXML
     private ImageView btnPlay;
     @FXML
@@ -95,8 +95,8 @@ class MyTunesController implements Initializable {
     private static final String IS_PLAYING = " is playing";
     private static final String IS_PAUSED = " is paused";
 
-    private TableView.TableViewSelectionModel<Song> selectedView;
-    private TableView.TableViewSelectionModel<Song> playingView;
+    private TableView.TableViewSelectionModel < Song > selectedView;
+    private TableView.TableViewSelectionModel < Song > playingView;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -104,45 +104,39 @@ class MyTunesController implements Initializable {
         songModel = SongModel.getInstance();
         songModel.setMyTunesController(this);
 
-
         btnPlay.setImage(play);
 
         speaker.setImage(normal);
 
         initializeTables();
 
-
         lblIsPlaying.setText(IDLE_TEXT);
 
         selectedView = tableSongs.getSelectionModel();
         playingView = tableSongs.getSelectionModel();
 
-
         addChangeListenersToTables();
     }
 
-
     private void addChangeListenersToTables() {
         //Adds a listener to tableSongs.
-        tableSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
-            private ObservableValue<? extends Song> observableValue;
+        tableSongs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener < Song > () {
+            private ObservableValue < ? extends Song > observableValue;
             private Song song;
             private Song t1;
 
-
-            public void changed(ObservableValue<? extends Song> observableValue, Song song, Song t1) {
+            public void changed(ObservableValue < ? extends Song > observableValue, Song song, Song t1) {
 
                 this.observableValue = observableValue;
                 this.song = song;
                 this.t1 = t1;
             }
 
-
         });
 
-        tableCurrentPlaylist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
+        tableCurrentPlaylist.getSelectionModel().selectedItemProperty().addListener(new ChangeListener < Song > () {
             @Override
-            public void changed(ObservableValue<? extends Song> observable, Song oldValue, Song newValue) {
+            public void changed(ObservableValue < ? extends Song > observable, Song oldValue, Song newValue) {
                 if (newValue != null) {
                     tableSongs.getSelectionModel().clearSelection();
                     selectedView = tableCurrentPlaylist.getSelectionModel();
@@ -150,7 +144,6 @@ class MyTunesController implements Initializable {
             }
         });
     }
-
 
     private void initializeTables() {
 
@@ -162,11 +155,9 @@ class MyTunesController implements Initializable {
         tableSongs.setItems(songModel.getSongs());
         updateTotals();
 
-
-        clmCurrentPlaylistTrack.setCellValueFactory(column -> new ReadOnlyObjectWrapper<>(tableCurrentPlaylist.getItems().indexOf(column.getValue())).asString());
+        clmCurrentPlaylistTrack.setCellValueFactory(column -> new ReadOnlyObjectWrapper < > (tableCurrentPlaylist.getItems().indexOf(column.getValue())).asString());
         clmCurrentPlaylistTitle.setCellValueFactory(i -> i.getValue().getTitle());
         tableCurrentPlaylist.setItems(songModel.getCurrentPlaylist());
-
 
         clmPlaylistName.setCellValueFactory(i -> i.getValue().getName());
         clmPlaylistSongsAmount.setCellValueFactory(i -> i.getValue().getSongs());
@@ -175,12 +166,10 @@ class MyTunesController implements Initializable {
         tablePlaylists.setItems(songModel.getPlaylists());
     }
 
-
     @FXML
     private void SongTableButton(MouseEvent event) throws IOException {
 
         ImageView selectedImage = (ImageView) event.getSource();
-
 
         primStage = (Stage) txtSearch.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/NewEditSongView.fxml"));
@@ -189,10 +178,8 @@ class MyTunesController implements Initializable {
         Stage editStage = new Stage();
         editStage.setScene(new Scene(root));
 
-
         editStage.initModality(Modality.WINDOW_MODAL);
         editStage.initOwner(primStage);
-
 
         if (selectedImage.getId().equals("add")) {
             editStage.show();
@@ -206,9 +193,7 @@ class MyTunesController implements Initializable {
         }
     }
 
-    private void assignSongValuesToModal(FXMLLoader loader, Song songToEdit) {
-    }
-
+    private void assignSongValuesToModal(FXMLLoader loader, Song songToEdit) {}
 
     @FXML
     private void pressingThePlayButton() {
@@ -227,8 +212,6 @@ class MyTunesController implements Initializable {
 
     }
 
-
-
     private void DoubleClick(MouseEvent event) {
         if (event.getClickCount() == 2) {
             songModel.stopPlaying();
@@ -238,22 +221,15 @@ class MyTunesController implements Initializable {
         }
     }
 
-
     private void playSong(Song selectedSong) {
         songModel.playSelectedSong(selectedSong);
         playingView = selectedView;
-        btnPlay.setImage(pause);
-        lblIsPlaying.setText(selectedSong.getTitle() + IS_PLAYING);
     }
-
 
     @FXML
     private void StopButton() {
         songModel.stopPlaying();
-        btnPlay.setImage(play);
-        lblIsPlaying.setText(IDLE_TEXT);
     }
-
 
     @FXML
     private void Search() {
@@ -263,7 +239,6 @@ class MyTunesController implements Initializable {
         }
     }
 
-
     @FXML
     private void ClearSearch() {
         songModel.clearSearch();
@@ -271,10 +246,9 @@ class MyTunesController implements Initializable {
     }
 
     public void playNextSong() {
-        Song nextSong = selectNextSong(true); //sends true value to skip forward
+        Song nextSong = selectNextSong(true);
         playSong(nextSong);
     }
-
 
     private Song selectNextSong(boolean goForward) {
         songModel.stopPlaying();
@@ -288,13 +262,11 @@ class MyTunesController implements Initializable {
         return selectedView.getSelectedItem();
     }
 
-
     @FXML
     private void SkipForwardButton() {
         Song nextSong = selectNextSong(true);
         playSong(nextSong);
     }
-
 
     @FXML
     private void SkipBackwardButton() {
@@ -302,16 +274,15 @@ class MyTunesController implements Initializable {
         playSong(nextSong);
     }
 
-
     @FXML
     private void actionSongDeleteButton(MouseEvent event) {
         try {
-            ObservableList<Song> songsSelected = tableSongs.getSelectionModel().getSelectedItems();
-            ArrayList<Song> songsToDelete = new ArrayList<>(songsSelected);
+            ObservableList < Song > songsSelected = tableSongs.getSelectionModel().getSelectedItems();
+            ArrayList < Song > songsToDelete = new ArrayList < > (songsSelected);
 
             Alert alert = songRemoveDialog(songsToDelete.get(0));
 
-            Optional<ButtonType> result = alert.showAndWait();
+            Optional < ButtonType > result = alert.showAndWait();
 
             if (result.get() == ButtonType.OK) {
                 songModel.deleteSongs(songsToDelete);
@@ -332,16 +303,14 @@ class MyTunesController implements Initializable {
     }
 
     private void updateTotals() {
-        lblTotalSongs.setText(songModel.getSongs().size()+"");
+        lblTotalSongs.setText(songModel.getSongs().size() + "");
 
     }
-
 
     @FXML
     private void actionReplay() {
         songModel.replaySong();
     }
-
 
     @FXML
     private void actionSongToPlaylist(MouseEvent event) {
@@ -349,16 +318,15 @@ class MyTunesController implements Initializable {
         songModel.addSongToPlaylist(songToAdd);
     }
 
-
     @FXML
     private void actionRemoveSongFromPlaylistButton(MouseEvent event) {
         try {
-            ObservableList<Song> selectedSongs = tableCurrentPlaylist.getSelectionModel().getSelectedItems();
-            ArrayList<Song> songsToDelete = new ArrayList<>(selectedSongs);
+            ObservableList < Song > selectedSongs = tableCurrentPlaylist.getSelectionModel().getSelectedItems();
+            ArrayList < Song > songsToDelete = new ArrayList < > (selectedSongs);
 
             Alert alert = songRemoveDialog(songsToDelete.get(0));
 
-            Optional<ButtonType> result = alert.showAndWait();
+            Optional < ButtonType > result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 songModel.removeSongsFromCurrentPlaylist(songsToDelete);
             }
@@ -366,7 +334,6 @@ class MyTunesController implements Initializable {
             System.out.println("Wrong delete button");
         }
     }
-
 
     private Alert songRemovalPopup(Song songToRemove) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -376,7 +343,6 @@ class MyTunesController implements Initializable {
         return alert;
     }
 
-
     private Alert playlistRemoveDialog(Playlist playlistToRemove) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Making Sure");
@@ -385,12 +351,10 @@ class MyTunesController implements Initializable {
         return alert;
     }
 
-
     @FXML
     private void actionPlaylistTableButton(MouseEvent event) throws IOException {
 
         ImageView selectedImage = (ImageView) event.getSource();
-
 
         primStage = (Stage) txtSearch.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/NewEditPlaylistView.fxml"));
@@ -399,10 +363,8 @@ class MyTunesController implements Initializable {
         Stage editStage = new Stage();
         editStage.setScene(new Scene(root));
 
-
         editStage.initModality(Modality.WINDOW_MODAL);
         editStage.initOwner(primStage);
-
 
         if (selectedImage.getId().equals("createPlaylist")) {
             editStage.show();
@@ -423,22 +385,21 @@ class MyTunesController implements Initializable {
 
     @FXML
     private void actionRemovePlaylist(MouseEvent event) {
-        ObservableList<Playlist> selectedPlaylists = tablePlaylists.getSelectionModel().getSelectedItems();
-        ArrayList<Playlist> playlistsToDelete = new ArrayList<>(selectedPlaylists);
+        ObservableList < Playlist > selectedPlaylists = tablePlaylists.getSelectionModel().getSelectedItems();
+        ArrayList < Playlist > playlistsToDelete = new ArrayList < > (selectedPlaylists);
 
         Alert alert = playlistRemoveDialog(selectedPlaylists.get(0));
 
-        Optional<ButtonType> result = alert.showAndWait();
+        Optional < ButtonType > result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             songModel.deletePlaylist(playlistsToDelete);
         }
     }
 
-
     @FXML
     private void actionMoveSongUpButton(MouseEvent event) {
         int selectedIndex = tableCurrentPlaylist.getSelectionModel().getSelectedIndex();
-        ArrayList<Song> currentPlaylist = songModel.getCurrentPlaylistAsArrayList();
+        ArrayList < Song > currentPlaylist = songModel.getCurrentPlaylistAsArrayList();
         if (selectedIndex - 1 >= 0) {
             Collections.swap(currentPlaylist, selectedIndex, selectedIndex - 1);
             songModel.updateCurrentPlaylist(currentPlaylist);
@@ -446,18 +407,16 @@ class MyTunesController implements Initializable {
         }
     }
 
-
     @FXML
     private void actionMoveSongDownButton(MouseEvent event) {
         int selectedIndex = tableCurrentPlaylist.getSelectionModel().getSelectedIndex();
-        ArrayList<Song> currentPlaylist = songModel.getCurrentPlaylistAsArrayList();
+        ArrayList < Song > currentPlaylist = songModel.getCurrentPlaylistAsArrayList();
         if (selectedIndex + 1 < currentPlaylist.size() && selectedView == tableCurrentPlaylist.getSelectionModel()) {
             Collections.swap(currentPlaylist, selectedIndex, selectedIndex + 1);
             songModel.updateCurrentPlaylist(currentPlaylist);
             tableCurrentPlaylist.getSelectionModel().select(selectedIndex + 1);
         }
     }
-
 
     @FXML
     private void actionMusicVolume() {
@@ -474,7 +433,6 @@ class MyTunesController implements Initializable {
         });
     }
 
-
     @FXML
     private void actionMute(MouseEvent event) {
         if (speaker.getImage().equals(normal)) {
@@ -489,24 +447,21 @@ class MyTunesController implements Initializable {
         }
     }
 
-
     private void actionShuffle(MouseEvent event) {
         songModel.shuffleCurrentPlaylist();
     }
-
 
     @FXML
     private void selectPlaylist(MouseEvent event) throws NullPointerException {
         try {
             int playlistId = tablePlaylists.getSelectionModel().getSelectedItem().getId();
             songModel.setPlaylistID(playlistId);
-            ArrayList<Song> list = tablePlaylists.getSelectionModel().getSelectedItem().getSongsInPlaylist();
+            ArrayList < Song > list = tablePlaylists.getSelectionModel().getSelectedItem().getSongsInPlaylist();
             songModel.updateCurrentPlaylist(list);
         } catch (Exception e) {
             System.out.println("Selection error " + e);
         }
     }
-
 
     private void MultiSelect(KeyEvent event) {
         if (event.isControlDown() | event.isShiftDown()) {
@@ -518,6 +473,5 @@ class MyTunesController implements Initializable {
 
         }
     }
-
 
 }
