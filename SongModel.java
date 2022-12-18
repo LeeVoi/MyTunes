@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class SongModel {
@@ -37,16 +39,28 @@ public class SongModel {
         fileManager = new FileManager();
         playermusic.setSongModel(this);
         songsSaved = FXCollections.observableArrayList();
-        mytunController = HelloController.getInstance();
+        mytunController = getInstance().mytunController;
 
     }
     public void removeSongsFromCurrentPlaylist(ArrayList<Song> songsToDelete) {
+        for (Song song : songsToDelete) {
+            currentPlaylist.remove(song);
     }
 
     public void setMyTunesController(MyTunesController myTunesController) {
+            this.mtController = mtController;
     }
 
     public void loadSavedSongs() {
+            if (musicDao.isSongsThere()) {
+                ArrayList<Song> songsFromFile = musicDao.getSongsFromFile();
+                if (!songsFromFile.isEmpty()) {
+                    songs.clear();
+                    songs.addAll(songsFromFile);
+                }
+            } else {
+                System.out.println("Song File Not Found");
+            }
     }
 
     private void savePlaylists(){
@@ -59,58 +73,109 @@ public class SongModel {
     }
 
     public void stopPlaying() {
+            if )playerMusic.isPlaying()){
+                playerMusic.stopPlaying();
+            }
     }
 
     public void playSelectedSong(Song selectedSong) {
+            if (playerMusic.isPlaying))
+
     }
 
-    public void searchSong(String search) {
+    public void searchSong(String searchString) {
+            ArrayList<Song> searchedSongs = new ArrayList<>();
+            songsSaved.addAll(tunes);
+            tunes.clear();
     }
 
     public void pausePlaying() {
+            playerMusic.stopPlaying();
     }
 
     public Stage getCurrentSongPlaying() {
-        return null;
+        return musicPlayer.getCurrentSong();
     }
 
     public void setPlaylistID(int playlistId) {
+            this.playlistID = playlistID;
+        }
     }
 
     public void updateCurrentPlaylist(ArrayList<Song> list) {
+        currentPlaylist.clear();
+        for (Song song : playlist) {
+            currentPlaylist.add(tunes);
+        }
     }
 
     public void shuffleCurrentPlaylist() {
+        Collections.shuffle(Playlist);
     }
 
     public void addSongToPlaylist(Song songToAdd) {
+        Playlist.add(tunes);
     }
 
     public void replaySong() {
+        if(playerMusic.isPlaying()){
+            playerMusic.replaySong();
+        }
     }
 
-    public void deleteSongs(ArrayList<Song> songsToDelete) {
+    public void deleteSongs(ArrayList<Song> songsToDelete) {{
+        tunes.remove(tunes);
     }
+    saveSongs();}
 
     public void clearSearch() {
+        if (songsSaved.isEmpty()){
+            tunes.clear();
+        }
     }
 
     public void loadSavedPlaylists() {
+        if (songsfromfile.isEmpty()){
+            tunes.clear();
+            tunes.addAll(fileSongs);
+        }
     }
 
     public ObservableList<Playlist> getPlaylists() {
+        return Playlist;
     }
 
     public ObservableList<Song> getCurrentPlaylist() {
+        return Playlist;
     }
 
     public ArrayList<Song> getCurrentPlaylistAsArrayList() {
+        ArrayList<Song> playlist = new ArrayList<>();
+        for (Song song : currentPlaylist) {
+            playlist.add(song);
+        }
+        return playlist;
     }
 
     public void deletePlaylist(ArrayList<Playlist> playlistsToDelete) {
+        {
+            playlists.remove(playlist);
+        }
+        savePlaylists();
     }
 
     public void switchVolume(double value) {
         mytunesplayer.setVolume(value);
+    }
+
+    public void stopPlaying() {
+        if (playerMusic.isPlaying()) {
+            playerMusic.stopPlaying();
+        }
+
+    }
+
+    public Stage getCurrentSongPlaying() {
+        return playerMusic.getCurrentSong();
     }
 }
