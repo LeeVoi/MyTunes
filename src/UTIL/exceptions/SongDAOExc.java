@@ -7,9 +7,10 @@ public class SongDAOExc {
         e.printStackTrace();
     }
 
-    @Override
-    public String getMessage() {
+
+    public String getMessage()
+    {
         return message;
     }
 }
-}
+

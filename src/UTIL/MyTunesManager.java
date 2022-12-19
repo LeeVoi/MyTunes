@@ -1,26 +1,27 @@
 package UTIL;
 
-
 import BE.Author;
 import BE.CategorySong;
 import BE.PlayList;
 import BE.Song;
-import UTIL.exceptions.*;
 import UTIL.MP.MusicPlayer;
+import UTIL.exceptions.*;
+import DBC.DALMyTunesInterface;
+import DBC.IDALMyTunesInterface;
 
 import java.util.List;
 
 public class MyTunesManager  implements MyTunesInterface{
         MusicPlayer musicPlayer;
 
-        IDALMyTunesFacade idalMyTunesFacade;
+        IDALMyTunesInterface idalMyTunesInterface;
 
         public MyTunesManager() throws ManagerExc
         {
             musicPlayer = MusicPlayer.getInstance();
             try
             {
-                idalMyTunesFacade = new DALMyTunesFacade();
+                idalMyTunesInterface = new DALMyTunesInterface();
             }
             catch (Exception e)
             {
@@ -31,16 +32,15 @@ public class MyTunesManager  implements MyTunesInterface{
         public Author getAuthor(int id) throws AuthorExc
         {
             try {
-                return idalMyTunesFacade.getAuthor(id);
+                return idalMyTunesInterface.getAuthor(id);
             } catch (Exception e) {
                 throw new AuthorExc("Couldn't get the author !", e);
             }
         }
-
         public List<Author> getALlAuthors() throws AuthorExc
         {
             try {
-                return idalMyTunesFacade.getALlAuthors();
+                return idalMyTunesInterface.getAllAuthors();
             } catch (Exception e) {
                 throw new AuthorExc("Couldn't not get all authors !", e);
             }
@@ -49,7 +49,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public Author createAuthor(String name) throws AuthorExc
         {
             try {
-                return idalMyTunesFacade.createAuthor(name);
+                return idalMyTunesInterface.createAuthor(name);
             } catch (Exception e) {
                 throw new AuthorExc("Couldn't not create author !", e);
             }
@@ -58,7 +58,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void updateAuthor(Author author) throws AuthorExc
         {
             try {
-                idalMyTunesFacade.updateAuthor(author);
+                idalMyTunesInterface.updateAuthor(author);
             } catch (Exception e) {
                 throw new AuthorExc("Couldn't update author !", e);
             }
@@ -66,7 +66,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void deleteAuthor(Author author) throws AuthorExc
         {
             try {
-                idalMyTunesFacade.updateAuthor(author);
+                idalMyTunesInterface.updateAuthor(author);
             } catch (Exception e) {
                 throw new AuthorExc("Couldn't delete author !", e);
             }
@@ -75,7 +75,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public CategorySong getCategorySong(int id) throws CategoryExc
         {
             try {
-                return idalMyTunesFacade.getCategorySong(id);
+                return idalMyTunesInterface.getCategorySong(id);
             } catch (Exception e) {
                 throw new CategoryExc("Couldn't get the song category !", e);
             }
@@ -84,7 +84,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public List<CategorySong> getALlCategorySong() throws CategoryExc
         {
             try {
-                return idalMyTunesFacade.getALlCategorySong();
+                return idalMyTunesInterface.getALlCategorySong();
             } catch (Exception e) {
                 throw new CategoryExc("Couldn't get all song categories !", e);
             }
@@ -93,7 +93,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public CategorySong createCategorySong(CategorySong category) throws CategoryExc
         {
             try {
-                return idalMyTunesFacade.createCategorySong(category);
+                return idalMyTunesInterface.createCategorySong(category);
             } catch (Exception e) {
                 throw new CategoryExc("Couldn't creat song category !", e);
             }
@@ -102,7 +102,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void updateCategorySong(CategorySong category) throws CategoryExc
         {
             try {
-                idalMyTunesFacade.updateCategorySong(category);
+                idalMyTunesInterface.updateCategorySong(category);
             } catch (Exception e) {
                 throw new CategoryExc("Couldn't update category !", e);
             }
@@ -111,7 +111,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void deleteCategorySong(CategorySong category) throws CategoryExc
         {
             try {
-                idalMyTunesFacade.deleteCategorySong(category);
+                idalMyTunesInterface.deleteCategorySong(category);
             } catch (Exception e) {
                 throw new CategoryExc("Couldn't creat category !", e);
             }
@@ -120,7 +120,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public PlayList getPlayList(int id) throws PlayListExc
         {
             try {
-                return idalMyTunesFacade.getPlayList(id);
+                return idalMyTunesInterface.getPlayList(id);
             } catch (Exception e) {
                 throw new PlayListExc("Couldn't play the playlist !", e);
             }
@@ -129,7 +129,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public List<PlayList> getALlPlayLists() throws PlayListExc
         {
             try {
-                return idalMyTunesFacade.getALlPlayLists();
+                return idalMyTunesInterface.getALlPlayLists();
             } catch (Exception e) {
                 throw new PlayListExc("Couldn't get all playlists !", e);
             }
@@ -138,7 +138,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public PlayList createPlayList(PlayList playList) throws PlayListExc
         {
             try {
-                return idalMyTunesFacade.createPlayList(playList);
+                return idalMyTunesInterface.createPlayList(playList);
             } catch (Exception e) {
                 throw new PlayListExc("Couldn't create the playlist !", e);
             }
@@ -147,7 +147,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void updatePlayList(PlayList playList) throws PlayListExc
         {
             try {
-                idalMyTunesFacade.updatePlayList(playList);
+                idalMyTunesInterface.updatePlayList(playList);
             } catch (Exception e) {
                 throw new PlayListExc("Couldn't update the playlist !", e);
             }
@@ -156,7 +156,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void deletePlayList(PlayList playList) throws PlayListExc
         {
             try {
-                idalMyTunesFacade.deletePlayList(playList);
+                idalMyTunesInterface.deletePlayList(playList);
             } catch (Exception e) {
                 throw new PlayListExc("Couldn't delete playlist!", e);
             }
@@ -165,7 +165,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public Song getSong(int id) throws SongExc
         {
             try {
-                return idalMyTunesFacade.getSong(id);
+                return idalMyTunesInterface.getSong(id);
             } catch (Exception e) {
                 throw new SongExc("Unable to get song!", e);
             }
@@ -174,7 +174,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public List<Song> getALlSongs() throws SongExc
         {
             try {
-                return idalMyTunesFacade.getALlSongs();
+                return idalMyTunesInterface.getALlSongs();
             } catch (Exception e) {
                 throw new SongExc("Unable to get song!", e);
             }
@@ -183,7 +183,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public Song createSong(Song song) throws SongExc
         {
             try {
-                return idalMyTunesFacade.createSong(song);
+                return idalMyTunesInterface.createSong(song);
             } catch (Exception e) {
                 throw new SongExc("Unable to create song!", e);
             }
@@ -192,7 +192,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void updateSong(Song song) throws SongExc
         {
             try {
-                idalMyTunesFacade.updateSong(song);
+                idalMyTunesInterface.updateSong(song);
             } catch (Exception e) {
                 throw new SongExc("Unable to update song!", e);
             }
@@ -201,7 +201,7 @@ public class MyTunesManager  implements MyTunesInterface{
         public void deleteSong(Song song) throws SongExc
         {
             try {
-                idalMyTunesFacade.deleteSong(song);
+                idalMyTunesInterface.deleteSong(song);
             } catch (Exception e) {
                 throw new SongExc("Unable to delete song!", e);
             }
@@ -230,7 +230,7 @@ public class MyTunesManager  implements MyTunesInterface{
         @Override
         public void updatePlayListName(PlayList playList) throws Exception
         {
-            idalMyTunesFacade.updatePlayListName(playList);
+            idalMyTunesInterface.updatePlayListName(playList);
         }
     }
-}
+
