@@ -11,9 +11,8 @@ import java.util.List;
 
     /**
      * AUTHOR database management Class,
-     * In charge of creating, deleting, updating or reading the content of the AUTHOR Table
+     * Class purbese is to create delete update and read the AUTHOR table.
      * This class modify the table AUTHOR
-     * but does not have any other table management associated.
      *
      * */
     public class AuthorDA implements AuthorDataAccess {
@@ -21,6 +20,7 @@ import java.util.List;
         public AuthorDA() throws Exception {
             cm = new ConnectionManegment();
         }
+        
         /**
          * Get an Author from the database based on the id in parameter
          * Return an author
@@ -46,7 +46,6 @@ import java.util.List;
 
             return authorSearched;
         }
-
 
         /**
          * Get all the author contained in the database
@@ -81,11 +80,13 @@ import java.util.List;
         public Author createAuthor(String authorName) throws Exception {
             Author authorCreated=null;
             try (Connection con = cm.getConnection()) {
+                
                 //I check if an author with the same name already exists in the databse,
                 //if it does, I return the author already existing, if not, I create a new author
                 //with this name and return the author created
                 //No need to pass the name in lower case for a thorough check as sql Server seems to return the value as
                 //intented disregarding the state of the CASE used.
+                
                 String sqlCheckSelect = "SELECT * FROM AUTHOR WHERE name = ?";
                 PreparedStatement pstCheckAuthor = con.prepareStatement(sqlCheckSelect);
                 pstCheckAuthor.setString(1,authorName);
